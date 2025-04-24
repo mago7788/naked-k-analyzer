@@ -51,5 +51,4 @@ if st.button("執行裸K判斷"):
     ax.set_xticklabels([f"K{i+1}" for i in range(len(df))])
     st.pyplot(fig)
 #
-file_path
 
