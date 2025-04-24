@@ -1,5 +1,4 @@
 # 重新執行生成 Streamlit app 原型代碼（因執行環境重置）
-app_code = """
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -55,8 +54,6 @@ if st.button("執行裸K判斷"):
 
 # 儲存為 Python 檔案供部署用
 file_path = "/mnt/data/裸K判斷小工具_app.py"
-with open(file_path, "w", encoding="utf-8") as f:
-    f.write(app_code)
-
+#
 file_path
 
