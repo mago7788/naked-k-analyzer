@@ -50,10 +50,6 @@ if st.button("執行裸K判斷"):
     ax.set_xticks(range(len(df)))
     ax.set_xticklabels([f"K{i+1}" for i in range(len(df))])
     st.pyplot(fig)
-"""
-
-# 儲存為 Python 檔案供部署用
-file_path = "/mnt/data/裸K判斷小工具_app.py"
 #
 file_path
 
