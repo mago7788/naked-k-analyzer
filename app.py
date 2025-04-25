@@ -1,7 +1,7 @@
-# 產出乾淨部署版的 app.py 和 requirements.txt 並打包為 zip
+# 重新產出 ZIP 包（環境重設後）
 from zipfile import ZipFile
 
-# 最簡部署版 app.py（無 /mnt/data、無 streamlit run 寫法）
+# app.py 程式碼內容
 clean_app_code = '''
 import streamlit as st
 import pandas as pd
@@ -85,7 +85,7 @@ with open("/mnt/data/app.py", "w", encoding="utf-8") as f:
 with open("/mnt/data/requirements.txt", "w", encoding="utf-8") as f:
     f.write(requirements)
 
-# 壓縮成 zip
+# 壓縮成 ZIP
 zip_path = "/mnt/data/裸K小工具_部署專用乾淨版.zip"
 with ZipFile(zip_path, "w") as zipf:
     zipf.write("/mnt/data/app.py", arcname="app.py")
