@@ -1,5 +1,4 @@
-# 環境重置後，重新生成已整合修復版 app.py
-latest_fixed_app_code = """
+
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -11,7 +10,7 @@ st.set_page_config(page_title="裸K判斷小工具", layout="centered")
 st.title("裸K判斷小工具 🧠")
 st.markdown("以下為自動從幣安抓取的 BTC/USDT 15分鐘K線，自動分析趨勢方向與K棒結構。")
 
-# 抓取幣安 K 線資料（修正 timestamp 與所有欄位轉型）
+# 抓取幣安 K 線資料（完整強制轉型）
 def get_binance_klines(symbol="BTCUSDT", interval="15m", limit=5):
     url = f"https://api.binance.com/api/v3/klines?symbol={symbol}&interval={interval}&limit={limit}"
     response = requests.get(url)
@@ -19,12 +18,16 @@ def get_binance_klines(symbol="BTCUSDT", interval="15m", limit=5):
     klines = []
     for entry in data:
         ts = datetime.fromtimestamp(int(entry[0]) / 1000).strftime('%Y-%m-%d %H:%M')
+        open_price = float(entry[1])
+        high = float(entry[2])
+        low = float(entry[3])
+        close = float(entry[4])
         klines.append({
             "時間": ts,
-            "開盤": float(entry[1]),
-            "最高": float(entry[2]),
-            "最低": float(entry[3]),
-            "收盤": float(entry[4])
+            "開盤": open_price,
+            "最高": high,
+            "最低": low,
+            "收盤": close
         })
     return pd.DataFrame(klines)
 
@@ -74,10 +77,3 @@ try:
 
 except Exception as e:
     st.error(f"出錯啦：{e}")
-"""
-
-file_path = "/mnt/data/app_裸K判斷最新版_已修復.py"
-with open(file_path, "w", encoding="utf-8") as f:
-    f.write(latest_fixed_app_code)
-
-file_path
