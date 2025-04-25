@@ -17,7 +17,7 @@ def get_binance_klines(symbol="BTCUSDT", interval="15m", limit=5):
     data = response.json()
     klines = []
     for entry in data:
-        ts = datetime.fromtimestamp(int(entry[0]) / 1000).strftime('%Y-%m-%d %H:%M')
+        ts = datetime.fromtimestamp(int(entry[0]) / 1000)  ✅（對）
         open_price = float(entry[1])
         high = float(entry[2])
         low = float(entry[3])
