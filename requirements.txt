@@ -1,5 +1,0 @@
-# requirements.txt
-streamlit
-pandas
-matplotlib
-requests
