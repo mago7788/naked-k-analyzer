@@ -1,5 +1,4 @@
-# 建立一個簡易版「百家樂預測小工具」Streamlit App 程式碼（純邏輯 + 預測建議）
-baccarat_predictor_code = '''
+
 import streamlit as st
 import random
 
@@ -49,23 +48,3 @@ if st.session_state.history:
 # 重設按鈕
 if st.button("🔄 清除紀錄"):
     st.session_state.history = []
-'''
-
-# requirements.txt
-requirements = "streamlit\n"
-
-# 儲存為部署用檔案
-with open("/mnt/data/app.py", "w", encoding="utf-8") as f:
-    f.write(baccarat_predictor_code)
-
-with open("/mnt/data/requirements.txt", "w", encoding="utf-8") as f:
-    f.write(requirements)
-
-# 壓縮成 ZIP
-from zipfile import ZipFile
-zip_path = "/mnt/data/百家樂預測小工具.zip"
-with ZipFile(zip_path, "w") as zipf:
-    zipf.write("/mnt/data/app.py", arcname="app.py")
-    zipf.write("/mnt/data/requirements.txt", arcname="requirements.txt")
-
-zip_path
