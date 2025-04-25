@@ -82,8 +82,6 @@ requirements = "streamlit\npandas\nmatplotlib\nrequests"
 
 
 zip_path = "/mnt/data/裸K判斷小工具_重新打包版.zip"
-with ZipFile(zip_path, "w") as zipf:
-    zipf.write("/mnt/data/app.py", arcname="app.py")
-    zipf.write("/mnt/data/requirements.txt", arcname="requirements.txt")
+
 
 zip_path
