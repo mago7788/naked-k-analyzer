@@ -1,0 +1,35 @@
+
+import streamlit as st
+from db import verify_user
+
+st.set_page_config(page_title="登入系統", layout="centered")
+
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
+    st.session_state.username = ""
+
+def login():
+    st.title("🔐 爆神預測登入")
+    username = st.text_input("帳號")
+    password = st.text_input("密碼", type="password")
+    if st.button("登入"):
+        if verify_user(username, password):
+            st.success("登入成功")
+            st.session_state.logged_in = True
+            st.session_state.username = username
+        else:
+            st.error("登入失敗，帳號或密碼錯誤")
+
+def main_page():
+    st.title("🎴 百家樂預測系統")
+    st.write(f"👋 歡迎，{st.session_state.username}！")
+    st.success("這是您登入後才能看到的內容。")
+    st.markdown("（這裡可以嵌入百家樂預測、策略模擬、圖表顯示等功能）")
+    if st.button("登出"):
+        st.session_state.logged_in = False
+        st.session_state.username = ""
+
+if st.session_state.logged_in:
+    main_page()
+else:
+    login()
