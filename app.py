@@ -1,4 +1,7 @@
+# 環境重啟後，重新生成修復版裸K小工具 zip 檔
+from zipfile import ZipFile
 
+app_code = '''
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -10,14 +13,13 @@ st.set_page_config(page_title="裸K判斷小工具", layout="centered")
 st.title("裸K判斷小工具 🧠")
 st.markdown("以下為自動從幣安抓取的 BTC/USDT 15分鐘K線，自動分析趨勢方向與K棒結構。")
 
-# 抓取幣安 K 線資料（完整強制轉型）
 def get_binance_klines(symbol="BTCUSDT", interval="15m", limit=5):
     url = f"https://api.binance.com/api/v3/klines?symbol={symbol}&interval={interval}&limit={limit}"
     response = requests.get(url)
     data = response.json()
     klines = []
     for entry in data:
-        ts = datetime.fromtimestamp(int(entry[0]) / 1000)  ✅（對）
+        ts = datetime.fromtimestamp(int(entry[0]) / 1000).strftime('%Y-%m-%d %H:%M')
         open_price = float(entry[1])
         high = float(entry[2])
         low = float(entry[3])
@@ -31,7 +33,6 @@ def get_binance_klines(symbol="BTCUSDT", interval="15m", limit=5):
         })
     return pd.DataFrame(klines)
 
-# 裸K判斷邏輯
 def analyze_k(open_, high, low, close):
     body = abs(close - open_)
     upper_shadow = high - max(open_, close)
@@ -46,7 +47,6 @@ def analyze_k(open_, high, low, close):
         note += " 短實體或十字，市場猶豫。"
     return note
 
-# 趨勢總結
 def overall_trend(kbars):
     closes = [row["收盤"] for row in kbars]
     if len(closes) >= 3 and closes[-1] > closes[-2] > closes[-3]:
@@ -56,7 +56,6 @@ def overall_trend(kbars):
     else:
         return "⏸ 市場震盪觀望，等待突破"
 
-# 主程式流程
 try:
     df = get_binance_klines()
     df["K棒解讀"] = df.apply(lambda row: analyze_k(row["開盤"], row["最高"], row["最低"], row["收盤"]), axis=1)
@@ -77,3 +76,19 @@ try:
 
 except Exception as e:
     st.error(f"出錯啦：{e}")
+'''
+
+requirements = "streamlit\npandas\nmatplotlib\nrequests"
+
+with open("/mnt/data/app.py", "w", encoding="utf-8") as f:
+    f.write(app_code)
+
+with open("/mnt/data/requirements.txt", "w", encoding="utf-8") as f:
+    f.write(requirements)
+
+zip_path = "/mnt/data/裸K判斷小工具_重新打包版.zip"
+with ZipFile(zip_path, "w") as zipf:
+    zipf.write("/mnt/data/app.py", arcname="app.py")
+    zipf.write("/mnt/data/requirements.txt", arcname="requirements.txt")
+
+zip_path
