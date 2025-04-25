@@ -54,6 +54,10 @@ def overall_trend(kbars):
 # 主流程
 try:
     df = get_binance_klines()
+    # 將欄位明確轉為 float（強制處理幣安回傳字串的問題）
+float_cols = ["開盤", "最高", "最低", "收盤"]
+for col in float_cols:
+    df[col] = df[col].astype(float)
     df = df.astype({"開盤": float, "最高": float, "最低": float, "收盤": float})  # 強制轉型避免字串錯誤
     df["K棒解讀"] = df.apply(lambda row: analyze_k(row["開盤"], row["最高"], row["最低"], row["收盤"]), axis=1)
 
