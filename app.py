@@ -80,8 +80,6 @@ except Exception as e:
 
 requirements = "streamlit\npandas\nmatplotlib\nrequests"
 
-streamlit run app.py
-
 
 with open("/mnt/data/requirements.txt", "w", encoding="utf-8") as f:
     f.write(requirements)
