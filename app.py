@@ -81,9 +81,6 @@ except Exception as e:
 requirements = "streamlit\npandas\nmatplotlib\nrequests"
 
 
-with open("/mnt/data/requirements.txt", "w", encoding="utf-8") as f:
-    f.write(requirements)
-
 zip_path = "/mnt/data/裸K判斷小工具_重新打包版.zip"
 with ZipFile(zip_path, "w") as zipf:
     zipf.write("/mnt/data/app.py", arcname="app.py")
