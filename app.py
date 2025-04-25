@@ -79,10 +79,10 @@ except Exception as e:
 requirements = "streamlit\npandas\nmatplotlib\nrequests"
 
 # 寫入檔案
-with open("/mnt/data/app.py", "w", encoding="utf-8") as f:
+encoding="utf-8") as f:
     f.write(clean_app_code)
 
-with open("/mnt/data/requirements.txt", "w", encoding="utf-8") as f:
+encoding="utf-8") as f:
     f.write(requirements)
 
 # 壓縮成 ZIP
